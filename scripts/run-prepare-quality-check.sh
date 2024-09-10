@@ -24,8 +24,7 @@ fi
 mkdir -p $qualityCheckOutputDirectory
 
 cd src/quality-check-repos
-
-docker-compose ps
+docker ps
 
 docker-compose -f sonar-docker-compose.yml down
 
@@ -38,5 +37,6 @@ mkdir -p ./docker/postgres/postgresql
 mkdir -p ./docker/postgres/data
 
 docker-compose -f sonar-docker-compose.yml up -d
-sleep 20
 
+# sleep 20
+sleep 120

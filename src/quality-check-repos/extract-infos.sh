@@ -4,7 +4,7 @@ REPOSITORY=$1
 WITH_BUILD=${2:-true}
 $SCRIPT_BASE_PATH=$3
 
-source ./build-and-scan.sh $REPOSITORY $WITH_BUILD $SCRIPT_BASE_PATH
+source ./build-and-scan.sh $REPOSITORY $WITH_BUILD $SCRIPT_BASE_PATH || . ./build-and-scan.sh $REPOSITORY $WITH_BUILD $SCRIPT_BASE_PATH
 
 export projectType=$projectType
 export projectTypeVersion=$projectTypeVersion

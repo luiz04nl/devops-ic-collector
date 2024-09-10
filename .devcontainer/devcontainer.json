@@ -1,14 +1,15 @@
 {
-  "name": "Alpine Debug",
+  "name": "Debug",
   "dockerComposeFile": ["docker-compose.debug.yml"],
   "service": "devops-ci-collector-debug",
   "workspaceFolder": "/usr/src/app",
   "shutdownAction": "stopCompose",
+  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
+  "runArgs": ["--add-host=host.docker.internal:host-gateway"],
   "extensions": [
     "ms-vscode-remote.remote-containers",
     "eamodio.gitlens",
     "editorconfig.editorconfig",
-    "hashicorp.terraform",
     "jbockle.jbockle-format-files",
     "honnamkuan.golang-snippets",
     "aldijav.golangwithdidi",

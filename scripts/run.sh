@@ -23,10 +23,14 @@ sh ./scripts/run-check-agile-and-behaviors.sh  &&
 
 sh ./scripts/run-contributors.sh &&
 
+sh ./scripts/run-prepare-quality-check.sh &&
+
+#############################################
+
 sh ./scripts/run-quality-check.sh &&
 
 ### Data Analysis
-sh ./scripts/run-arrange-dataset.sh &&
+# sh ./scripts/run-arrange-dataset.sh &&
 ## Not Used - Categories - out/arrange-dataset/CategoryGroup-Quantity.png
 ## Figure 1 - Mean of Bugs by Group - out/arrange-dataset/CategoryGroup-Bugs.png
 ## Figure 2 - Mean of Vulnerabilities by Group - out/arrange-dataset/CategoryGroup-Vulnerabilities.png

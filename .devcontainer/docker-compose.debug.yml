@@ -1,39 +1,24 @@
 version: '3.4'
 
 networks:
-  devops-ci-collector-net:
+  devops-ic-collector-net:
     driver: bridge
 
 services:
-  # devops-ci-collector-database:
-  #   image: mysql:8.0
-  #   container_name: devops-ci-collector-database
-  #   restart: always
-  #   ports:
-  #     - '3306:3306'
-  #   networks:
-  #     - devops-ci-collector-net
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: 123
-  #     MYSQL_DATABASE: base_node
-  #     MYSQL_USER: morais
-  #     MYSQL_PASSWORD: sql
   devops-ci-collector-debug:
     env_file:
       - ../.env
     build:
       context: ./
-      dockerfile: alpine.debug.Dockerfile
+      dockerfile: debug.Dockerfile
       target: debug
     volumes:
       - ..:/usr/src/app
     networks:
-      - devops-ci-collector-net
+      - devops-ic-collector-net
     ports:
       - '3002:3002'
     container_name: devops-ci-collector-debug
     image: devops-ci-collector-debug:latest
     command: /bin/sh -c "while sleep 1000; do :; done"
-    # links:
-    #   - devops-ci-collector-database
     tty: true

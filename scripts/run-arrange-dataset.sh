@@ -20,7 +20,7 @@ python -m venv .env || echo "Skipped"
 source .env/bin/activate || . .env/bin/activate
 
 # pip install pandas seaborn
-# pip freeze > requirements.txt 
+# pip freeze > requirements.txt
 pip install -r requirements.txt
 
 python main.py > ../../out/out-arrange-dataset.json 2> ../../out/out-arrange-dataset.json

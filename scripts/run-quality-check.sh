@@ -25,18 +25,18 @@ fi
 mkdir -p $qualityCheckOutputDirectory
 
 cd src/quality-check-repos
-
-mkdir -p ./docker/sonarqube/data
-mkdir -p ./docker/sonarqube/extensions
-mkdir -p ./docker/sonarqube/logs
-mkdir -p ./docker/postgres/postgresql
-mkdir -p ./docker/postgres/data
-
-docker-compose -f sonar-docker-compose.yml down
-docker-compose -f sonar-docker-compose.yml up -d
-sleep 20
-
 chmod +x *sh
+
+docker ps
+
+# mkdir -p ./docker/sonarqube/data
+# mkdir -p ./docker/sonarqube/extensions
+# mkdir -p ./docker/sonarqube/logs
+# mkdir -p ./docker/postgres/postgresql
+# mkdir -p ./docker/postgres/data
+# docker-compose -f sonar-docker-compose.yml down
+# docker-compose -f sonar-docker-compose.yml up -d
+# sleep 20
 
 go run . > ../../out/out-quality-check-repos.json 2> ../../out/out-quality-check-repos.json
 
