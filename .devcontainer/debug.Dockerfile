@@ -52,7 +52,7 @@ RUN . ~/.nvm/nvm.sh \
   && nvm use default
 WORKDIR /usr/src/app
 
-# Intall go
+# # Initial go
 WORKDIR /tmp
 RUN wget https://go.dev/dl/go1.23.1.linux-amd64.tar.gz
 RUN rm -rf /usr/local/go

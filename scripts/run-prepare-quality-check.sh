@@ -38,5 +38,4 @@ mkdir -p ./docker/postgres/data
 
 docker-compose -f sonar-docker-compose.yml up -d
 
-# sleep 20
 sleep 120
