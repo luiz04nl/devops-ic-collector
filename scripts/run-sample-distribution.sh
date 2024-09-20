@@ -14,7 +14,7 @@ cd src/sample-distribution
 
 mkdir .env || echo "Skipped"
 python -m venv .env || echo "Skipped"
-source .env/bin/activate || . .env/bin/activate
+. .env/bin/activate
 pip install -r requirements.txt
 
 python main.py > ../../out/out-sample-distribution.json 2> ../../out/out-sample-distribution.json

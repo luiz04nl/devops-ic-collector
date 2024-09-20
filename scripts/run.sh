@@ -22,8 +22,6 @@ sh ./scripts/run-contributors.sh &&
 
 sh ./scripts/run-prepare-quality-check.sh &&
 
-### Data Extraction Part 2
-
 sh ./scripts/run-quality-check.sh &&
 
 ### Data Analysis

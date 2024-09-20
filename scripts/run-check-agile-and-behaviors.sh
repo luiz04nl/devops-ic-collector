@@ -18,7 +18,7 @@ cd src/check-agile-and-behaviors
 
 mkdir .env || echo "Skipped"
 python -m venv .env || echo "Skipped"
-source .env/bin/activate || . .env/bin/activate
+. .env/bin/activate
 pip install -r requirements.txt
 
 go run . > ../../out/out-check-agile-and-behaviors.json 2> ../../out/out-check-agile-and-behaviors.json

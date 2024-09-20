@@ -17,7 +17,7 @@ cd src/arrange-dataset
 
 mkdir .env || echo "Skipped"
 python -m venv .env || echo "Skipped"
-source .env/bin/activate || . .env/bin/activate
+. .env/bin/activate
 
 # pip install pandas seaborn
 # pip freeze > requirements.txt

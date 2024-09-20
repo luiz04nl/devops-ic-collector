@@ -90,12 +90,6 @@ sh ./scripts/run-contributors.sh
 That command goes to each repository market like wasCloned and for each one checks the frequency of commits integrated in the default branch using the project pydriller. Repositories with average frequency more than 15 days were considered and markets like not agile useAgile = 0, and the other like useAgile = 1.
 
 ## Fourth Step - Build and extract data using sonarqube and docker
-
-Prepare the docker container with sonar and postgres sql
-```bash
-sh ./scripts/run-prepare-quality-check.sh
-```
-
 Access the sonar url on http://localhost:9000/ with username and password admin
 you will need to change the admin password, change to sonar because it is configured in scripts
 

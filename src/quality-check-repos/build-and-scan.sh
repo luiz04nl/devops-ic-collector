@@ -22,7 +22,7 @@ echo "BUILD_PATH: $BUILD_PATH"
 
 mkdir -p $SCRIPT_BASE_PATH/../../out/quality-check-repos
 
-SONAR_URL="http://localhost:9000"
+SONAR_URL="http://sonarqube:9000"
 SONAR_USERNAME="admin"
 SONAR_PASSWORD="sonar"
 SONAR_CREDENTIALS="${SONAR_USERNAME}:${SONAR_PASSWORD}"
@@ -283,7 +283,4 @@ then
 
   sonar-scanner --version
   sonar-scanner -X
-
-  # #MSYS_NO_PATHCONV=1 docker run --rm -e SONAR_HOST_URL="$SONAR_URL" -v "$(pwd):/usr/src" sonarsource/sonar-scanner-cli --version 2>&1
-  # #MSYS_NO_PATHCONV=1 docker run --rm -e SONAR_HOST_URL="$SONAR_URL" -v "$(pwd):/usr/src" sonarsource/sonar-scanner-cli -X 2>&1
 fi

@@ -37,5 +37,6 @@ out/*
 json.json
 out*.json
 
-src/quality-check-repos/docker
+.devcontainer/volumes/
+
 jdeodorant-commandline

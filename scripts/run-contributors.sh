@@ -18,7 +18,7 @@ cd src/contributors
 
 mkdir .env || echo "Skipped"
 python -m venv .env || echo "Skipped"
-source .env/bin/activate || . .env/bin/activate
+. .env/bin/activate
 pip install -r requirements.txt
 
 go run . > ../../out/out-contributors.json 2> ../../out/out-contributors.json

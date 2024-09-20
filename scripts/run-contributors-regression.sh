@@ -17,7 +17,7 @@ cd src/contributors-regression
 
 mkdir .env || echo "Skipped"
 python -m venv .env || echo "Skipped"
-source .env/bin/activate || . .env/bin/activate
+. .env/bin/activate
 
 # pip install pandas statsmodels
 # pip freeze > requirements.txt
