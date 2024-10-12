@@ -1,4 +1,9 @@
-FROM ubuntu:20.04 AS debug
+# Docker-outside-of-Docker (DoD)
+# FROM ubuntu:20.04 AS debug
+FROM mcr.microsoft.com/vscode/devcontainers/base:ubuntu AS debug
+
+# Docker-in-Docker (DinD)
+# FROM docker:24-dind AS debug
 
 WORKDIR /usr/src/app
 
@@ -9,25 +14,34 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive \
   && apt-get install -y locales tzdata \
   && rm -rf /var/lib/apt/lists/* \
-	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+  && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install git -y  \
+  && apt-get install git bash -y  \
   && apt-get install jq wget unzip curl ca-certificates -y \
-  && apt-get install python3 python-is-python3 python3.8-venv pip -y
+  && apt-get install python3 python-is-python3 pip python3.10-venv -y
+
+# python3.8-venv -y
 
 RUN git config --global core.autocrlf false
 
-# Install docker inside docker
-RUN install -m 0755 -d /etc/apt/keyrings
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-RUN chmod a+r /etc/apt/keyrings/docker.asc
-RUN echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  tee /etc/apt/sources.list.d/docker.list > /dev/null
-RUN apt-get update && apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+# # Install docker inside docker
+# RUN install -m 0755 -d /etc/apt/keyrings
+# RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+# RUN chmod a+r /etc/apt/keyrings/docker.asc
+# RUN echo \
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+#   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+#   tee /etc/apt/sources.list.d/docker.list > /dev/null
+# RUN apt-get update && apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+# Instalar dependências para Docker
+RUN apt-get install -y apt-transport-https ca-certificates curl software-properties-common \
+    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+    && apt-get update \
+    && apt-get install -y docker-ce-cli
 
 # Install docker compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -62,6 +76,19 @@ WORKDIR /usr/src/app
 
 # Prepare
 RUN mkdir -p repos
+# RUN mkdir -p /usr/src/repos
 
-# EXPOSE 80
+# Adicionar o usuário padrão ao grupo docker (opcional, se necessário)
+RUN groupadd docker \
+    && usermod -aG docker vscode
+
+# RUN apt-get install sudo -y
+# RUN useradd -ms /bin/bash vscode
+# RUN usermod -aG docker vscode
+# RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# RUN chown -R vscode:vscode /home/vscode
+# WORKDIR /usr/src/app
+# USER vscode
+
+# # EXPOSE 80
 ENV SHELL /bin/bash

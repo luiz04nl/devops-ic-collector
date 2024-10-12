@@ -15,10 +15,14 @@ fi
 
 cd $SCRIPT_BASE_PATH
 cd ../../repos/
+
 cd $REPOSITORY
 
 BUILD_PATH=`pwd`
 echo "BUILD_PATH: $BUILD_PATH"
+
+HOST_BUILD_PATH=${DOCKER_VOLUMES_BASE_PATH}repos/${REPOSITORY}
+echo "HOST_BUILD_PATH: $HOST_BUILD_PATH"
 
 mkdir -p $SCRIPT_BASE_PATH/../../out/quality-check-repos
 
@@ -46,7 +50,6 @@ filesAtRootDir=$(ls .)
 
 mkdir -p target/classes
 mkdir -p target/test-classes
-
 
 if [ -f "pom.xml" ]; then
   cat <<EOF >> sonar-project.properties
@@ -79,7 +82,11 @@ EOF
 
   if [ "$WITH_BUILD" = "true" ]
   then
-    MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:$projectTypeVersion /bin/bash -c "git config --global --add safe.directory /usr/src/mymaven && mvn compile" 2>&1
+    MSYS_NO_PATHCONV=1 docker run --rm -v "$HOST_BUILD_PATH":/usr/src/mymaven -w /usr/src/mymaven maven:$projectTypeVersion /bin/bash -c "git config --global --add safe.directory /usr/src/mymaven && mvn compile" 2>&1
+
+    # MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:$projectTypeVersion /bin/bash -c "cd /usr/src/mymaven && ls -la ."
+    # MSYS_NO_PATHCONV=1 docker run --rm -v "$HOST_BUILD_PATH":/usr/src/mymaven -w /usr/src/mymaven maven:$projectTypeVersion /bin/bash -c "cd /usr/src/mymaven && ls -la ."
+
   fi
 
 elif [ -f "build.gradle" ]; then
@@ -116,7 +123,7 @@ EOF
 
   if [ "$WITH_BUILD" = "true" ]
   then
-    MSYS_NO_PATHCONV=1 docker run --rm -u gradle -v `pwd`:/home/gradle/project -w /home/gradle/project gradle:$projectTypeVersion /bin/bash -c "git config --global --add safe.directory /home/gradle/project && gradle build" 2>&1
+    MSYS_NO_PATHCONV=1 docker run --rm -u gradle -v "$HOST_BUILD_PATH":/home/gradle/project -w /home/gradle/project gradle:$projectTypeVersion /bin/bash -c "git config --global --add safe.directory /home/gradle/project && gradle build" 2>&1
   fi
 
 elif  [ -f "build.xml" ]; then
@@ -145,7 +152,7 @@ EOF
 
   if [ "$WITH_BUILD" = "true" ]
   then
-    MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd)":/workspace -w /workspace bitnami/ant:$projectTypeVersion /bin/bash -c "git config --global --add safe.directory/workspace && ant build" 2>&1
+    MSYS_NO_PATHCONV=1 docker run --rm -v "$HOST_BUILD_PATH":/workspace -w /workspace bitnami/ant:$projectTypeVersion /bin/bash -c "git config --global --add safe.directory/workspace && ant build" 2>&1
   fi
 
 elif  [ -f "package.json" ]; then
@@ -249,7 +256,7 @@ EOF
   mavenVersion="3.8.1"
   if [ "$WITH_BUILD" = "true" ]
   then
-    MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:$mavenVersion /bin/bash -c "git config --global --add safe.directory /usr/src/mymaven && mvn -f custom-pom.xml compile" 2>&1
+    MSYS_NO_PATHCONV=1 docker run --rm -v "$HOST_BUILD_PATH":/usr/src/mymaven -w /usr/src/mymaven maven:$mavenVersion /bin/bash -c "git config --global --add safe.directory /usr/src/mymaven && mvn -f custom-pom.xml compile" 2>&1
   fi
 
   else

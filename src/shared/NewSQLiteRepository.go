@@ -106,6 +106,7 @@ func (sQLiteRepository *SQLiteRepository) SaveMultiple(repos []RepositoryDto) er
 
 func (sQLiteRepository *SQLiteRepository) GetCloned() ([]RepositoryDto, error) {
 	rows, err := sQLiteRepository.db.Query("SELECT * FROM repositories WHERE wasCloned = '1'")
+	// rows, err := sQLiteRepository.db.Query("SELECT * FROM repositories WHERE wasCloned = '1' LIMIT 1 OFFSET 50")
 
 	if err != nil {
 		return nil, err

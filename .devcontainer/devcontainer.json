@@ -4,8 +4,13 @@
   "service": "devops-ci-collector-debug",
   "workspaceFolder": "/usr/src/app",
   "shutdownAction": "stopCompose",
-  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-  "runArgs": ["--add-host=host.docker.internal:host-gateway"],
+  "runArgs": [
+    "--add-host=host.docker.internal:host-gateway",
+    "--privileged"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
   "extensions": [
     "ms-vscode-remote.remote-containers",
     "eamodio.gitlens",
@@ -14,5 +19,6 @@
     "honnamkuan.golang-snippets",
     "aldijav.golangwithdidi",
     "neonxp.gotools"
-  ]
+  ],
+  "remoteUser": "root"
 }
